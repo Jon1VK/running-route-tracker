@@ -1,5 +1,5 @@
 <% content_for :head do %>
-  <%= javascript_pack_tag :application, defer: true %>
+  <%= javascript_pack_tag :dashboard, defer: true %>
 <% end %>
 
 <nav>
@@ -7,3 +7,7 @@
   <p>Logged in as <%= current_user.email %></p>
   <%= link_to "Logout", destroy_user_session_url %>
 </nav>
+
+<main>
+  <div id="dashboard-container"></div>
+</main>
