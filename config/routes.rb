@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
-  root to: 'static_pages#index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'static_pages#index'
+  get '/dashboard', to: 'static_pages#dashboard', as: :user_root
+
+  devise_for :users, path: '', skip: :registrations, path_names: {
+    sign_in: 'login',
+    sign_out: 'logout',
+  }
+
+  as :user do
+    get 'register', to: 'devise/registrations#new', as: :new_user_registration
+    post 'register', to: 'devise/registrations#create', as: :user_registration
+  end
 end
