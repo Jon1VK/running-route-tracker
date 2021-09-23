@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'static_pages#index'
-  get '/profile', to: 'static_pages#profile', as: :user_root
+  get '/dashboard', to: 'static_pages#dashboard', as: :user_root
 
   devise_for :users, path: '', skip: :registrations, path_names: {
     sign_in: 'login',
