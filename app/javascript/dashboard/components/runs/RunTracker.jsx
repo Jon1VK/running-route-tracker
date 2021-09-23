@@ -2,14 +2,27 @@ import React from 'react';
 import { useRunTracker } from '../../hooks/useRunTracker';
 
 const RunTracker = () => {
-  const Tracker = useRunTracker();
+  const { start, pause, distance, duration, error, latLngs } = useRunTracker();
+
+  const renderedError = error ? <p>{error}</p> : null;
+  const renderedLatLngs = (
+    <ul>
+      {latLngs.map(({ latitude, longitude }, idx) => (
+        <li key={idx}>
+          Latitude: {latitude} Longitude: {longitude}
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <div>
-      <p>Distance: {Tracker.distance} kilometers</p>
-      <p>Duration: {Tracker.duration} seconds</p>
-      <button onClick={() => Tracker.start()}>Start</button>
-      <button onClick={() => Tracker.pause()}>Pause</button>
+      {renderedError}
+      <p>Distance: {distance} kilometers</p>
+      <p>Duration: {duration} seconds</p>
+      <button onClick={() => start()}>Start</button>
+      <button onClick={() => pause()}>Pause</button>
+      {renderedLatLngs}
     </div>
   );
 };

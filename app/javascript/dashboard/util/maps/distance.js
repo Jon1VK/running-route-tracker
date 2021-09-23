@@ -3,17 +3,18 @@ const RadDegRatio = PI / 180;
 const EarthAvgDiameter = 12742;
 
 const degToRad = (deg) => deg * RadDegRatio;
+const roundToMeters = (distance) => Math.round(distance * 1000) / 1000;
 
-export const calculateDistance = (
-  { lat: lat1, lng: lng1 },
-  { lat: lat2, lng: lng2 }
-) =>
-  EarthAvgDiameter *
-  asin(
-    sqrt(
-      sin(degToRad(lat2 - lat1) / 2) ** 2 +
-        cos(degToRad(lat1)) *
-          cos(degToRad(lat2)) *
-          sin(degToRad(lng2 - lng1) / 2) ** 2
-    )
-  );
+export const calculateDistance = (startLatLng, endLatLng) => {
+  const { latitude: startLat, longitude: startLng } = startLatLng;
+  const { latitude: endLat, longitude: endLng } = endLatLng;
+
+  const firstSin = sin(degToRad(endLat - startLat) / 2);
+  const secondSin = sin(degToRad(endLng - startLng) / 2);
+  const firstCos = cos(degToRad(startLat));
+  const secondCos = cos(degToRad(endLat));
+  const sqrtRoot = sqrt(firstSin ** 2 + firstCos * secondCos * secondSin ** 2);
+  const distance = EarthAvgDiameter * asin(sqrtRoot);
+
+  return roundToMeters(distance);
+};

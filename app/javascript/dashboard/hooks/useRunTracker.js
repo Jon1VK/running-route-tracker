@@ -1,57 +1,60 @@
 import { useRef, useState } from 'react';
+import { useGeolocation } from './useGeolocation';
+import { useWakeLock } from './useWakeLock';
+import { useInterval } from './useInterval';
 import { calculateDistance } from '../util/maps/distance';
 
-const POS_OPTIONS = {
-  enableHighAccuracy: true,
-  maximumAge: 10000,
-};
-
 export function useRunTracker() {
-  const watchIdRef = useRef(null);
-  const intervalIdRef = useRef(null);
   const latLngsRef = useRef([]);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [error, setError] = useState(null);
 
-  function success(pos) {
-    const { latitude: lat, longitude: lng } = pos.coords;
-    latLngsRef.current.push({ lat, lng });
+  function handleError(error) {
+    setError(error.message);
+  }
 
-    if (latLngsRef.current.length > 1) {
-      const [latLng1, latLng2] = latLngsRef.current.slice(-2);
-      setDistance(
-        (prevDistance) => prevDistance + calculateDistance(latLng1, latLng2)
-      );
+  const geolocation = useGeolocation();
+  const wakeLock = useWakeLock(handleError);
+  const [setInterval, clearInterval] = useInterval();
+
+  function handlePositionChange(pos) {
+    if (latLngsRef.current.length > 0) {
+      const prevLatLng = latLngsRef.current.slice(-1)[0];
+      const newLatLng = pos.coords;
+      const movedDistance = calculateDistance(prevLatLng, newLatLng);
+
+      if (movedDistance > 0) {
+        setDistance((prevDistance) => prevDistance + movedDistance);
+        latLngsRef.current.push(newLatLng);
+      }
+    } else {
+      latLngsRef.current.push(pos.coords);
     }
+  }
+
+  function tick() {
+    setDuration((prevDuration) => prevDuration + 1);
   }
 
   function start() {
-    if (!watchIdRef.current && navigator.geolocation) {
-      watchIdRef.current = navigator.geolocation.watchPosition(
-        success,
-        null,
-        POS_OPTIONS
-      );
-      intervalIdRef.current = setInterval(
-        () => setDuration((prevDuration) => prevDuration + 1),
-        1000
-      );
-    }
+    geolocation.watchPosition(handlePositionChange, handleError);
+    wakeLock.request();
+    setInterval(tick, 1000);
   }
 
   function pause() {
-    if (watchIdRef.current) {
-      navigator.geolocation.clearWatch(watchIdRef.current);
-      watchIdRef.current = null;
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
-    }
+    geolocation.clearWatch();
+    wakeLock.release();
+    clearInterval();
   }
 
   return {
     start,
     pause,
+    latLngs: latLngsRef.current,
     distance,
     duration,
+    error,
   };
 }
