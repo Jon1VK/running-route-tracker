@@ -11,4 +11,8 @@ Rails.application.routes.draw do
     get 'register', to: 'devise/registrations#new', as: :new_user_registration
     post 'register', to: 'devise/registrations#create', as: :user_registration
   end
+
+  namespace :api, defaults: { format: :json } do
+    resources :runs, only: [:index, :create, :destroy]
+  end
 end
