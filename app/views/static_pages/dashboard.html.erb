@@ -1,10 +1,10 @@
 <% content_for :head do %>
   <%= javascript_pack_tag :dashboard, defer: true %>
+  <%= current_user_meta_tag %>
 <% end %>
 
 <nav>
   <h1>Dashboard</h1>
-  <p>Logged in as <%= current_user.email %></p>
   <%= link_to "Logout", destroy_user_session_url %>
 </nav>
 

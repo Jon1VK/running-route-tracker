@@ -1,17 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const _nullSession = { userId: null };
+const _nullSession = { currentUser: null };
 
 const sessionSlice = createSlice({
   name: 'session',
   initialState: _nullSession,
   reducers: {
-    receiveCurrentUserId(state, action) {
-      state.userId = action.payload;
+    receiveCurrentUser(state, action) {
+      state.currentUser = action.payload;
     },
   },
 });
 
-export const selectCurrentUserId = (state) => state.session.userId;
+export const { receiveCurrentUser } = sessionSlice.actions;
+
+export const selectCurrentUser = (state) => state.session.currentUser;
 
 export default sessionSlice.reducer;
