@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import sessionReducer from './slices/sessionSlice';
+import runsReducer from './slices/runsSlice';
 import { receiveCurrentUser } from './slices/sessionSlice';
 
 const store = configureStore({
   reducer: {
     session: sessionReducer,
+    runs: runsReducer,
   },
 });
 
