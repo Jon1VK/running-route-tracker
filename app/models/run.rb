@@ -2,13 +2,13 @@
 #
 # Table name: runs
 #
-#  id             :bigint           not null, primary key
-#  distance       :decimal(, )      not null
-#  duration       :integer          not null
-#  static_map_url :string           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  user_id        :bigint           not null
+#  id           :bigint           not null, primary key
+#  distance     :decimal(, )      not null
+#  duration     :integer          not null
+#  encoded_path :string           not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :bigint           not null
 #
 # Indexes
 #
@@ -21,7 +21,8 @@
 class Run < ApplicationRecord
   validates :distance, presence: true
   validates :duration, presence: true
-  validates :static_map_url, presence: true
+  validates :encoded_path, presence: true
   
+  has_one_attached :kml_layer_file
   belongs_to :user
 end
