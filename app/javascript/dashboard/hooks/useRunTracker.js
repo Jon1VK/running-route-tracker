@@ -1,8 +1,10 @@
+import { encode } from '@googlemaps/polyline-codec';
 import { useRef, useState } from 'react';
 import { useGeolocation } from './useGeolocation';
 import { useWakeLock } from './useWakeLock';
 import { useInterval } from './useInterval';
 import { calculateDistance } from '../util/maps/distance';
+import { getKMLLayerAsString } from '../util/maps/kml_layer';
 
 export function useRunTracker() {
   const latLngsRef = useRef([]);
@@ -18,10 +20,9 @@ export function useRunTracker() {
   const wakeLock = useWakeLock(handleError);
   const [setInterval, clearInterval] = useInterval();
 
-  function handlePositionChange(pos) {
+  function handlePositionChange({ coords: newLatLng }) {
     if (latLngsRef.current.length > 0) {
       const prevLatLng = latLngsRef.current.slice(-1)[0];
-      const newLatLng = pos.coords;
       const movedDistance = calculateDistance(prevLatLng, newLatLng);
 
       if (movedDistance > 0) {
@@ -29,7 +30,7 @@ export function useRunTracker() {
         latLngsRef.current.push(newLatLng);
       }
     } else {
-      latLngsRef.current.push(pos.coords);
+      latLngsRef.current.push(newLatLng);
     }
   }
 
@@ -43,15 +44,35 @@ export function useRunTracker() {
     setInterval(tick, 1000);
   }
 
-  function pause() {
+  function stop() {
     geolocation.clearWatch();
     wakeLock.release();
     clearInterval();
   }
 
+  function getEncodedPath() {
+    return encode(
+      latLngsRef.current.map(({ latitude: lat, longitude: lng }) => ({
+        lat,
+        lng,
+      }))
+    );
+  }
+
+  function getKMLLayerFile() {
+    if (latLngsRef.current.length > 0) {
+      return new File(
+        [getKMLLayerAsString(latLngsRef.current)],
+        'kml_layer.kml'
+      );
+    }
+  }
+
   return {
     start,
-    pause,
+    stop,
+    getEncodedPath,
+    getKMLLayerFile,
     distance,
     duration,
     error,

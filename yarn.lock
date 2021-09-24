@@ -942,6 +942,11 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
+"@googlemaps/polyline-codec@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@googlemaps/polyline-codec/-/polyline-codec-1.0.3.tgz#3792c26c0499195de537aee2ce8fa4fa4b57eb18"
+  integrity sha512-1T7EAUNHXB4jrBPclJRFsBYuPXeQlqMzJ+exmjiy216+NQDwRinxOrwLTChd5c9WA6XwfOqf0URSyLEZBAiHUg==
+
 "@npmcli/fs@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@npmcli/fs/-/fs-1.0.0.tgz#589612cfad3a6ea0feafcb901d29c63fd52db09f"
