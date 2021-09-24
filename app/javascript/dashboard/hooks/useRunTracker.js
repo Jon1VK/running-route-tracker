@@ -52,7 +52,6 @@ export function useRunTracker() {
   return {
     start,
     pause,
-    latLngs: latLngsRef.current,
     distance,
     duration,
     error,
