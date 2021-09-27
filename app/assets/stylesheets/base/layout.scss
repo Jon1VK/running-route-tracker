@@ -1,0 +1,43 @@
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+header p {
+  margin-top: 10px;
+}
+
+header a {
+  display: inline-block;
+  margin: 10px 10px 0 10px;
+}
+
+.container {
+  width: clamp(0px, 80%, 900px);
+  margin: 0 auto;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.frontpage {
+  position: relative;
+  height: 50vh;
+  background-image: image_url('frontpage');
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  justify-content: center;
+
+  h2 {
+    color: white;
+    text-shadow: 2px 2px 5px black;
+  }
+
+  div {
+    padding-top: 35vh;
+  }
+}

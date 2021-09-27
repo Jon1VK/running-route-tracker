@@ -3,11 +3,6 @@
   <%= current_user_meta_tag %>
 <% end %>
 
-<nav>
-  <h1>Dashboard</h1>
-  <%= link_to "Logout", destroy_user_session_url %>
-</nav>
-
-<main>
+<main class='container'>
   <div id="dashboard-container"></div>
 </main>

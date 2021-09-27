@@ -1,0 +1,9 @@
+<div class='footer-links'>
+  <%- if controller_name != 'sessions' %>
+    <%= link_to "Already have an account? Log in!", new_session_path(resource_name) %><br />
+  <% end %>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <%= link_to "Don't have an account yet? Sign up!", new_registration_path(resource_name) %><br />
+  <% end %>
+</div>

@@ -1,0 +1,54 @@
+form {
+  .field {
+    display: flex;
+    position: relative;
+    margin-top: 15px;
+    border: 1px solid gray;
+    border-radius: 5px;
+
+    label {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: 150ms;
+      padding: 0 5px;
+      color: hsl(0, 0, 20);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 300;
+    }
+
+    input {
+      padding: 10px 20px 5px 15px;
+      font-family: 'Nunito', sans-serif;
+      width: 100%;
+    }
+  }
+
+  .field:focus-within,
+  .field.has-value {
+    label {
+      top: 0;
+      font-size: 0.8rem;
+      background-color: white;
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.error-explanation p {
+  color: hsl(0, 75, 67);
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 0.9rem;
+}
+
+.error-explanation .alert {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1rem;
+}

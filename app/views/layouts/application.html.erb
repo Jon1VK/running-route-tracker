@@ -7,12 +7,15 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag :application, defer: true %>
     <%= yield :head %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <header>
+      <h1>Running Route Tracker</h1>
+    </header>
+
     <%= yield %>
   </body>
 </html>

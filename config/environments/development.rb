@@ -59,6 +59,8 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  config.assets.digest = false
+
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
@@ -74,4 +76,6 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.middleware.insert_before Rack::Runtime, Rack::LiveReload
 end
