@@ -49,11 +49,15 @@
   margin: 10px 20px;
 
   p {
-    font-size: 1.2rem;
     margin-bottom: 5px;
 
     span {
       font-weight: 700;
     }
   }
+}
+
+.map {
+  width: clamp(100px, 100%, 400px);
+  height: 300px;
 }

@@ -1,4 +1,5 @@
 <% content_for :head do %>
+  <script defer src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.maps_api_key %>"></script>
   <%= javascript_pack_tag :dashboard, defer: true %>
   <%= current_user_meta_tag %>
 <% end %>

@@ -26,7 +26,7 @@ export function useRunTracker() {
       const prevLatLng = latLngsRef.current.slice(-1)[0];
       const movedDistance = calculateDistance(prevLatLng, newLatLng);
 
-      if (movedDistance > 0) {
+      if (movedDistance > 0.01) {
         setDistance((prevDistance) => prevDistance + movedDistance);
         latLngsRef.current.push(newLatLng);
       }
@@ -64,10 +64,7 @@ export function useRunTracker() {
 
   function getKMLLayerFile() {
     if (latLngsRef.current.length > 0) {
-      return new File(
-        [getKMLLayerAsString(latLngsRef.current)],
-        'kml_layer.kml'
-      );
+      return new File([getKMLLayerAsString(latLngsRef.current)], 'layer.kml');
     }
   }
 

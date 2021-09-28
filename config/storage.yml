@@ -5,3 +5,10 @@ local:
 test:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
+
+aws:
+  service: S3
+  access_key_id: <%= Rails.application.credentials.aws[:access_key_id] %>
+  secret_access_key: <%= Rails.application.credentials.aws[:secret_access_key] %>
+  bucket: <%= Rails.application.credentials.aws[:bucket] %>
+  region: <%= Rails.application.credentials.aws[:region] %>

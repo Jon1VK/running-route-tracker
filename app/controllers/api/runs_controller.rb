@@ -35,6 +35,6 @@ class Api::RunsController < ApplicationController
   private
     # Only allow a list of trusted parameters through.
     def run_params
-      params.require(:run).permit(:distance, :duration, :encoded_path)
+      params.require(:run).permit(:distance, :duration, :encoded_path, :kml_layer_file)
     end
 end

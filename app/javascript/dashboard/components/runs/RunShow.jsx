@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { fetchRunById, selectRunById } from '../../slices/runsSlice';
+import Map from './Map';
 
 const secondsInMinutes = (totalSeconds) => {
   const hours = Math.floor(totalSeconds / 3600);
@@ -22,7 +23,7 @@ const RunShow = () => {
 
   return run ? (
     <div className="run-item">
-      <img src={run.staticMapUrl} />
+      <Map run={run} />
       <div className="run-index-item-data">
         <p>
           <span>{new Date(run.createdAt).toISOString().substring(0, 10)}</span>
