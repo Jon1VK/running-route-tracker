@@ -7,6 +7,12 @@ class Api::RunsController < ApplicationController
     @runs = current_user.runs
   end
 
+  # GET /runs/1
+  # GET /runs/1.json
+  def show
+    @run = current_user.runs.find(params[:id])
+  end
+
   # POST /runs
   # POST /runs.json
   def create

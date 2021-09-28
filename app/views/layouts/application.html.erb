@@ -14,6 +14,12 @@
   <body>
     <header>
       <h1>Running Route Tracker</h1>
+      <% if current_user %>
+        <p>
+          Logged in as <%= current_user.email %>
+          <%= link_to "Logout", destroy_user_session_url %>
+        </p>
+      <% end %>
     </header>
 
     <%= yield %>

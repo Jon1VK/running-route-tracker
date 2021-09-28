@@ -7,8 +7,17 @@ import * as runAPI from '../util/apis/run_api';
 
 const runsAdapter = createEntityAdapter();
 
-export const fetchRuns = createAsyncThunk('runs/requestRuns', () =>
+export const fetchRuns = createAsyncThunk('runs/fetchRuns', () =>
   runAPI.fetchRuns()
+);
+
+export const fetchRunById = createAsyncThunk(
+  'runs/fetchRunById',
+  (id, { getState }) => {
+    if (!getState().runs.ids[id]) {
+      return runAPI.fetchRunById(id);
+    }
+  }
 );
 
 export const createRun = createAsyncThunk(
@@ -23,12 +32,12 @@ const runsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchRuns.fulfilled, runsAdapter.setAll)
-      .addCase(createRun.fulfilled, runsAdapter.addOne);
+      .addCase(createRun.fulfilled, runsAdapter.addOne)
+      .addCase(fetchRunById.fulfilled, runsAdapter.addOne);
   },
 });
 
-export const { selectAll: selectAllRuns } = runsAdapter.getSelectors(
-  (state) => state.runs
-);
+export const { selectAll: selectAllRuns, selectById: selectRunById } =
+  runsAdapter.getSelectors((state) => state.runs);
 
 export default runsSlice.reducer;

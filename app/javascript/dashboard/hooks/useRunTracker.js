@@ -8,6 +8,7 @@ import { getKMLLayerAsString } from '../util/maps/kml_layer';
 
 export function useRunTracker() {
   const latLngsRef = useRef([]);
+  const [isTracking, setIsTracking] = useState(false);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(null);
@@ -42,12 +43,14 @@ export function useRunTracker() {
     geolocation.watchPosition(handlePositionChange, handleError);
     wakeLock.request();
     setInterval(tick, 1000);
+    setIsTracking(true);
   }
 
   function stop() {
     geolocation.clearWatch();
     wakeLock.release();
     clearInterval();
+    setIsTracking(false);
   }
 
   function getEncodedPath() {
@@ -69,6 +72,7 @@ export function useRunTracker() {
   }
 
   return {
+    isTracking,
     start,
     stop,
     getEncodedPath,

@@ -3,6 +3,9 @@ import csrf_token from './csrf_token';
 export const fetchRuns = () =>
   fetch('/api/runs').then((response) => response.json());
 
+export const fetchRunById = (id) =>
+  fetch(`/api/runs/${id}`).then((response) => response.json());
+
 export const createRun = async (run) => {
   const formData = new FormData();
   Object.entries(run).forEach(([key, value]) => {
